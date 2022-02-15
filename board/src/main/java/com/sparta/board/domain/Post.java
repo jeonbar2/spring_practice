@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity // 테이블과 연계됨을 스프링에게 알려줍니다.
 public class Post extends Timestamped { // 생성,수정 시간을 자동으로 만들어줍니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
+    @Id @Column(name = "post_id")
     private Long id;
 
     @Column(nullable = false)

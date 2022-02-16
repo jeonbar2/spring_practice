@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class CommentService
        return CommentDto.from(c);
     }
     @Transactional
-    public Long update(Long commentId,CommentRequestDto requestDto){
+    public Long update(Long commentId, CommentRequestDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 ()->new IllegalArgumentException("댓글이 없습니다.")
         );

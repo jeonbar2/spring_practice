@@ -1,15 +1,20 @@
-package com.sparta.board.service;
+package com.sparta.board.post.service;
 
-import com.sparta.board.domain.Post;
-import com.sparta.board.domain.PostRepository;
-import com.sparta.board.domain.PostRequestDto;
+import com.sparta.board.post.dto.PostDto;
+import com.sparta.board.post.dto.PostRequestDto;
+import com.sparta.board.post.entity.Post;
+import com.sparta.board.post.entity.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository; //꼭필요하다고 알려주기위해 final을 써주고 RequiredArgsConstructor를 어노테이션
 
@@ -20,5 +25,13 @@ public class PostService {
         );
         post.update(requestDto);
         return id;
+    }
+
+    public List<PostDto> getAll(){
+        List<Post> all = postRepository.findAllByOrderByModifiedAtDesc();
+        List<PostDto> dto = all.stream()
+                .map(post -> PostDto.from(post))
+                .collect(Collectors.toList());
+        return dto;
     }
 }

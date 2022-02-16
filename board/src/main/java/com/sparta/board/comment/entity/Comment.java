@@ -1,5 +1,8 @@
-package com.sparta.board.domain;
+package com.sparta.board.comment.entity;
 
+import com.sparta.board.comment.dto.CommentRequestDto;
+import com.sparta.board.common.Timestamped;
+import com.sparta.board.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +24,7 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+
     @ManyToOne
     @JoinColumn(name="post_id")
     private Post post;
@@ -32,8 +36,14 @@ public class Comment extends Timestamped {
 
     }
 
-    public Comment(CommentRequestDto requestDto) {
+    public Comment(CommentRequestDto requestDto, Post post) {
         this.contents= requestDto.getContents();
         this.username = requestDto.getUsername();
+        this.post = post;
+    }
+
+    public void update(CommentRequestDto requestDto){
+        this.contents=requestDto.getContents();
+        this.username=requestDto.getUsername();
     }
 }

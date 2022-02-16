@@ -1,5 +1,6 @@
-package com.sparta.board.domain;
+package com.sparta.board.post.entity;
 
+import com.sparta.board.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

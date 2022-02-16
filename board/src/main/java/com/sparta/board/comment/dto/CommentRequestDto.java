@@ -1,4 +1,4 @@
-package com.sparta.board.domain;
+package com.sparta.board.comment.dto;
 
 import lombok.Getter;
 
@@ -7,3 +7,4 @@ public class CommentRequestDto {
     private String username;
     private String contents;
 }
+

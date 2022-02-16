@@ -1,9 +1,10 @@
-package com.sparta.board.controller;
+package com.sparta.board.post.controller;
 
-import com.sparta.board.domain.Post;
-import com.sparta.board.domain.PostRepository;
-import com.sparta.board.domain.PostRequestDto;
-import com.sparta.board.service.PostService;
+import com.sparta.board.post.dto.PostDto;
+import com.sparta.board.post.dto.PostRequestDto;
+import com.sparta.board.post.service.PostService;
+import com.sparta.board.post.entity.Post;
+import com.sparta.board.post.entity.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/api/posts")
-    public List<Post>getPosts(){
-        return postRepository.findAllByOrderByModifiedAtDesc();
+    public List<PostDto>getPosts() {
+        return postService.getAll();
     }
 
     @PostMapping("/api/post")
@@ -32,9 +33,9 @@ public class PostController {
         return postRepository.findById(id);
     }
 
-    @PatchMapping("/api/post/{id}")
+    @PutMapping("/api/post/{id}")
     public Long updatePost(@PathVariable Long id,@RequestBody PostRequestDto requestDto){
-        System.out.println(requestDto);
+
         postService.update(id,requestDto);
         return id;
     }

@@ -1,5 +1,7 @@
-package com.sparta.board.domain;
+package com.sparta.board.post.entity;
 
+import com.sparta.board.common.Timestamped;
+import com.sparta.board.post.dto.PostRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +35,7 @@ public class Post extends Timestamped { // 생성,수정 시간을 자동으로 
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
+
 
     public void update(PostRequestDto requestDto){
         this.title = requestDto.getTitle();

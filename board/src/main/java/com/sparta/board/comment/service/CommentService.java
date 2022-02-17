@@ -4,6 +4,7 @@ import com.sparta.board.comment.dto.CommentDto;
 import com.sparta.board.comment.dto.CommentRequestDto;
 import com.sparta.board.comment.entity.Comment;
 import com.sparta.board.comment.entity.CommentRepository;
+import com.sparta.board.common.error.NotFoundException;
 import com.sparta.board.post.entity.Post;
 import com.sparta.board.post.entity.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -35,9 +37,14 @@ public class CommentService
     public CommentDto save(CommentRequestDto requestDto, Long postId){
 
         Post post = postRepository.findById(postId).orElseThrow(
-                ()->new IllegalArgumentException("포스트가 존재하지않습니다.")
-        );
+
+                ()-> {
+                    System.out.println("a");
+                    return new NotFoundException("포스트가 존재하지않습니다.");
+                });
+
         Comment comment = new Comment(requestDto,post);
+        System.out.println("as");
         Comment c = commentRepository.save(comment); //JPA가 저장한다음에 불러야 commentID가 생성됨됨
 
        return CommentDto.from(c);
@@ -45,7 +52,7 @@ public class CommentService
     @Transactional
     public Long update(Long commentId, CommentRequestDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                ()->new IllegalArgumentException("댓글이 없습니다.")
+                ()->new NotFoundException("댓글이 없습니다.")
         );
         comment.update(requestDto);
         return commentId;

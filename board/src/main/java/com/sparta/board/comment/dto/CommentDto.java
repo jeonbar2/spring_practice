@@ -13,7 +13,7 @@ public class CommentDto {
     private Long id;
     private String username;
 
-    @NotBlank(message = "내용을입력해주세요")
+
     private String contents;
 
     public static CommentDto from(Comment comment) {

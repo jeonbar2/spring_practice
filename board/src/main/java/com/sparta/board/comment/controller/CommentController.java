@@ -20,8 +20,11 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("api/comments/{postId}")
-    public List<CommentDto> getComment(@PathVariable Long postId) {
-        return commentService.getAll(postId);
+    public ResponseEntity<List<CommentDto>> getComment(@PathVariable Long postId) {
+        List<CommentDto> response = commentService.getAll(postId);
+        return ResponseEntity.ok(response);
+
+
     }
 
     //    @PostMapping("api/comments/{postId}")
@@ -29,13 +32,13 @@ public class CommentController {
 //        return commentService.save(requestDto,postId);
 //    }
     @PostMapping("api/comments/{postId}")
-    public ResponseEntity<CommentDto> postComment(@PathVariable Long postId,@Valid @RequestBody CommentRequestDto requestDto) {
-        CommentDto response=commentService.save(requestDto,postId);
+    public ResponseEntity<CommentDto> postComment(@PathVariable Long postId, @Valid @RequestBody CommentRequestDto requestDto) {
+        CommentDto response = commentService.save(requestDto, postId);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/api/comments/{commentId}")
-    public Long updateComment(@PathVariable Long commentId,@Valid @RequestBody CommentRequestDto requestDto) {
+    public Long updateComment(@PathVariable Long commentId, @Valid @RequestBody CommentRequestDto requestDto) {
         commentService.update(commentId, requestDto);
         return commentId;
     }

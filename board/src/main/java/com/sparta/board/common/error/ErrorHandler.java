@@ -1,11 +1,14 @@
 package com.sparta.board.common.error;
-
+import com.sparta.board.common.error.NotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -21,4 +24,18 @@ public class ErrorHandler {
                 .message(fieldError.getDefaultMessage())    // 내가 설정한 메시지
                 .build();
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> notFound(Exception e) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)   // 404
+                .body(
+                        ErrorResponse.builder()
+                                .message(e.getLocalizedMessage())               // 오류가 터진 곳에서 재정의한 메시지를 가져옴
+                                .exceptionType(e.getClass().getSimpleName())    // Exception 타입을 반환 (Exception 종류가 많아지면 유용)
+                                .build()
+                );
+    }
+
 }

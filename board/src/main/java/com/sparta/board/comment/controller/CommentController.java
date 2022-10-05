@@ -8,6 +8,7 @@ import com.sparta.board.post.entity.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.security.provider.certpath.ResponderId;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -38,9 +39,9 @@ public class CommentController {
     }
 
     @PutMapping("/api/comments/{commentId}")
-    public Long updateComment(@PathVariable Long commentId, @Valid @RequestBody CommentRequestDto requestDto) {
-        commentService.update(commentId, requestDto);
-        return commentId;
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Long commentId, @Valid @RequestBody CommentRequestDto requestDto) {
+        CommentDto response = commentService.update(commentId, requestDto);
+        return ResponseEntity.ok(response);
     }
 
 

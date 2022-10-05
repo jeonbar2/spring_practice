@@ -50,12 +50,14 @@ public class CommentService
        return CommentDto.from(c);
     }
     @Transactional
-    public Long update(Long commentId, CommentRequestDto requestDto){
+    public CommentDto update(Long commentId, CommentRequestDto requestDto){
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 ()->new NotFoundException("댓글이 없습니다.")
         );
+
         comment.update(requestDto);
-        return commentId;
+
+        return CommentDto.from(comment);
     }
 
     @Transactional

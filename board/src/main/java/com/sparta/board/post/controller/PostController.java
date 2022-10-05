@@ -19,6 +19,7 @@ public class PostController {
 
     @GetMapping("/api/posts")
     public List<PostDto>getPosts() {
+
         return postService.getAll();
     }
 
